@@ -1,7 +1,7 @@
 {
-  "name": "slim-phaser",
+  "name": "phaser-tutorial",
   "version": "1.0.0",
-  "description": "Slim phaser webpack boilerplate",
+  "description": "Phaser tutorial using phaser boilerplate",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
