@@ -9,7 +9,7 @@ module.exports = {
     "no-underscore-dangle": 0
   },
   "globals": {
-    "phaser": true
+    "Phaser": true
   },
   "plugins": [
     "import"
