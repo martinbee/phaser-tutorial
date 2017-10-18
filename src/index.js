@@ -2,23 +2,20 @@ import 'pixi';
 import 'p2';
 import Phaser from 'phaser';
 
-/**
- * Create a new Phaser game instance.
- * And render a single sprite so we make sure it works.
- */
+import gameLoop from './gameLoop';
 
-const game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload, create, update });
+// config
+const {
+  GAME_WIDTH,
+  GAME_HEIGHT,
+  GAME_RENDERER,
+  GAME_ENTRY_POINT,
+} = process.env;
 
-function preload() {
-  game.load.image('logo', './assets/images/phaser.png');
-}
+const width = GAME_WIDTH || 800;
+const height = GAME_HEIGHT || 600;
+const renderer = GAME_RENDERER || Phaser.AUTO;
+const entryPoint = GAME_ENTRY_POINT || '';
 
-function create() {
-  const logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-  logo.anchor.setTo(0.5, 0.5);
-}
-
-function update() {
-  // ¯ \_(ツ)_/¯
-  // "surprise me"
-}
+// initialize game
+const game = new Phaser.Game(width, height, renderer, entryPoint, gameLoop);

@@ -32,6 +32,7 @@ module.exports = {
   },
   module: {
     rules: [
+      { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
       { test: /pixi\.js/, use: ['expose-loader?PIXI'] },
       { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
       { test: /p2\.js/, use: ['expose-loader?p2'] },
@@ -45,5 +46,3 @@ module.exports = {
     },
   },
 };
-
-      //{ test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
