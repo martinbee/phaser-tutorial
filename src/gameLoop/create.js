@@ -1,5 +1,7 @@
 // this === Phaser.game;
 export default function create() {
+  this.sharedState = {};
+
   //  We're going to be using physics, so enable the Arcade Physics system
   this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -8,6 +10,7 @@ export default function create() {
 
   //  The platforms group contains the ground and the 2 ledges we can jump on
   const platforms = this.add.group();
+  this.sharedState.platforms = platforms;
 
   //  We will enable physics for any object that is created in this group
   platforms.enableBody = true;
@@ -32,17 +35,40 @@ export default function create() {
 
   // The player and its settings
   const player = this.add.sprite(32, this.world.height - 150, 'dude');
+  this.sharedState.player = player;
 
   //  We need to enable physics on the player
   this.physics.arcade.enable(player);
 
   //  Player physics properties. Give the little guy a slight bounce.
   player.body.bounce.y = 0.2;
-  player.body.gravity.y = 300;
+  player.body.gravity.y = 400;
   player.body.collideWorldBounds = true;
 
   //  Our two animations, walking left and right.
   player.animations.add('left', [0, 1, 2, 3], 10, true);
   player.animations.add('right', [5, 6, 7, 8], 10, true);
-  console.log(this);
+
+  const stars = this.add.group();
+  this.sharedState.stars = stars;
+
+  stars.enableBody = true;
+
+  //  Here we'll create 12 of them evenly spaced apart
+  for (let i = 0; i < 12; i++) {
+    //  Create a star inside of the 'stars' group
+    const star = stars.create(i * 70, 0, 'star');
+
+    //  Let gravity do its thing
+    star.body.gravity.y = 6;
+
+    //  This just gives each star a slightly random bounce value
+    star.body.bounce.y = 0.7 + Math.random() * 0.2;
+  }
+
+  const score = 0;
+  const scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+
+  this.sharedState.score = score;
+  this.sharedState.scoreText = scoreText;
 }
