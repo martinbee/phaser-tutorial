@@ -25,29 +25,23 @@ const handleMovement = (cursors, player, hitPlatform) => {
   }
 };
 
-const collectStar = (player, star, { sharedState }) => {
+const collectStar = (player, star, game) => {
   star.kill();
 
-  const { score } = sharedState;
-  const updatedScore = score + 10;
+  const updatedScore = game.score + 10;
 
-  sharedState.score = updatedScore;
-  sharedState.scoreText.text = `Score: ${updatedScore}`;
+  game.score = updatedScore;
+  game.scoreText.text = `Score: ${updatedScore}`;
 };
 
 // this === Phaser.game;
 export default function update() {
-  const {
-    player,
-    platforms,
-    stars,
-  } = this.sharedState;
-  const hitPlatform = this.physics.arcade.collide(player, platforms);
+  const hitPlatform = this.physics.arcade.collide(this.player, this.platforms);
 
-  const cursors = this.input.keyboard.createCursorKeys();
+  this.cursors = this.input.keyboard.createCursorKeys();
 
-  handleMovement(cursors, player, hitPlatform);
+  handleMovement(this.cursors, this.player, hitPlatform);
 
-  this.physics.arcade.collide(stars, platforms);
-  this.physics.arcade.overlap(player, stars, (player, star) => collectStar(player, star, this), null, this);
+  this.physics.arcade.collide(this.stars, this.platforms);
+  this.physics.arcade.overlap(this.player, this.stars, (player, star) => collectStar(player, star, this), null, this);
 }
