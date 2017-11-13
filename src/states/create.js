@@ -1,3 +1,4 @@
+const GAME_TIME = 10000;
 const platforms = [
   { x: 400, y: 400 },
   { x: 300, y: 600 },
@@ -52,16 +53,16 @@ export default function create() {
 
   //  Here we'll create 12 of them evenly spaced apart
   for (let i = 0; i < 12; i += 1) {
-    //  Create a star inside of the 'stars' group
-    const star = this.stars.create(i * 70, 0, 'star');
+    const starXLocation = i * 70;
 
-    //  Let gravity do its thing
-    star.body.gravity.y = 6;
-
-    //  This just gives each star a slightly random bounce value
-    star.body.bounce.y = 0.7 + (Math.random() * 0.2);
+    this.createStar(starXLocation);
   }
 
   this.score = 0;
   this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+
+  this.timer = this.time.create(false);
+  this.timer.loop(GAME_TIME, this.endGame, this);
+  this.timer.start();
+  this.timerText = this.add.text(650, 16, 'Time: 60', { fontSize: '32px', fill: '#000' });
 }
